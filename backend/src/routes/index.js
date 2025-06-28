@@ -3,6 +3,7 @@ import express from 'express';
 import healthRoutes from './health.js';
 import transcribeRoutes from './transcribe.js';
 import nlpRoutes from './nlp.js';
+import automationRoutes from './automation.js';
 
 const router = express.Router();
 
@@ -22,5 +23,6 @@ router.get('/', (req, res) => {
 router.use('/api', healthRoutes);
 router.use('/api', transcribeRoutes);
 router.use('/api', nlpRoutes);
+router.use('/api', automationRoutes);
 
 export default router;
