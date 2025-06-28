@@ -1,8 +1,7 @@
 import { transcribeAudio } from '../services/whisper/index.js';
 import fileValidator from '../services/file/fileValidator.js';
-import {  logError, logTranscription } from '../services/utils/logger.js';
+import { logError, logTranscription } from '../services/utils/logger.js';
 import fs from 'fs';
-
 
 export const uploadAudio = async (req, res) => {
   let filePath = null;
@@ -39,12 +38,10 @@ export const uploadAudio = async (req, res) => {
     };
 
     logTranscription('processing', 'Iniciando transcrição', options);
-
     const result = await transcribeAudio(filePath, options);
-
     const keepFile = req.body.keepFile === 'true' || req.query.keepFile === 'true';
     if (!keepFile) {
-      setTimeout(() => this._cleanupFile(filePath), 5000);
+      setTimeout(() => cleanupFile(filePath), 5000);
     }
 
     logTranscription('complete', 'Transcrição concluída', {
@@ -70,22 +67,18 @@ export const uploadAudio = async (req, res) => {
   } catch (error) {
     logError('Erro no controller de transcrição:', error);
 
-    if (filePath) this._cleanupFile(filePath);
+    if (filePath) cleanupFile(filePath);
 
-    const statusCode = this._getErrorStatusCode(error);
+    const statusCode = getErrorStatusCode(error);
     res.status(statusCode).json({
       success: false,
-      error: this._getErrorType(error),
-      message: this._getErrorMessage(error)
+      error: getErrorType(error), 
+      message: getErrorMessage(error)
     });
   }
 };
 
-/**
- * Limpa arquivo temporário
- * @private
- */
-function _cleanupFile(filePath) {
+function cleanupFile(filePath) { 
   try {
     if (fs.existsSync(filePath)) {
       fs.unlinkSync(filePath);
@@ -96,21 +89,21 @@ function _cleanupFile(filePath) {
   }
 }
 
-function _getErrorStatusCode(error) {
+function getErrorStatusCode(error) {
   if (error.message.includes('API Key')) return 401;
   if (error.message.includes('rate')) return 429;
   if (error.message.includes('grande')) return 413;
   return 500;
 }
 
-function _getErrorType(error) {
+function getErrorType(error) {
   if (error.message.includes('API Key')) return 'Erro de autenticação';
   if (error.message.includes('rate')) return 'Limite excedido';
   if (error.message.includes('grande')) return 'Arquivo muito grande';
   return 'Erro interno do servidor';
 }
 
-function _getErrorMessage(error) {
+function getErrorMessage(error) {
   if (process.env.NODE_ENV === 'development') {
     return error.message;
   }

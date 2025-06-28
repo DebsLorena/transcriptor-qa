@@ -1,11 +1,11 @@
-// backend/src/routes/index.js
+
 import express from 'express';
 import healthRoutes from './health.js';
 import transcribeRoutes from './transcribe.js';
+import nlpRoutes from './nlp.js';
 
 const router = express.Router();
 
-// Rota principal
 router.get('/', (req, res) => {
   res.json({ 
     message: 'Sistema de Reconhecimento de Voz API funcionando!',
@@ -19,8 +19,8 @@ router.get('/', (req, res) => {
   });
 });
 
-// Rotas organizadas
 router.use('/api', healthRoutes);
 router.use('/api', transcribeRoutes);
+router.use('/api', nlpRoutes);
 
 export default router;
