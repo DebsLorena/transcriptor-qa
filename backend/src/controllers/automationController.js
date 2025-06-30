@@ -20,8 +20,10 @@ export const executeCommands = async (req, res) => {
       });
     }
 
+    const totalCommandsSent = commands.length;
+
     logInfo('Iniciando execução de automação', {
-      commandCount: commands.length,
+      commandCount: totalCommandsSent,
       options
     });
 
@@ -31,20 +33,30 @@ export const executeCommands = async (req, res) => {
       ...options
     });
 
+    const notExecuted = totalCommandsSent - result.executedCommands;
+
     logSuccess('Automação concluída', {
-      successfulCommands: result.successfulCommands,
-      totalCommands: result.executedCommands
+       totalSent: totalCommandsSent,
+      executed: result.executedCommands,
+      successful: result.successfulCommands,
+      failed: result.failedCommands,
+      notExecuted: notExecuted
     });
 
     res.json({
       success: true,
-      message: `Automação executada: ${result.successfulCommands}/${result.executedCommands} comandos bem-sucedidos`,
+      // Mensagem mais clara sobre o que aconteceu
+      message: result.executedCommands < totalCommandsSent 
+        ? `Automação parcial: ${result.successfulCommands} sucesso, ${result.failedCommands} falhas, ${notExecuted} não executados (total: ${totalCommandsSent})`
+        : `Automação executada: ${result.successfulCommands}/${totalCommandsSent} comandos bem-sucedidos`,
       data: {
         execution: result,
         summary: {
-          totalCommands: result.executedCommands,
+          totalCommandsSent: totalCommandsSent,  
+          totalExecuted: result.executedCommands, 
           successful: result.successfulCommands,
           failed: result.failedCommands,
+          notExecuted: notExecuted,              
           executionTime: `${result.executionTimeMs}ms`
         }
       }
