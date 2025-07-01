@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sistema de comandos com automatização
 
-## Getting Started
+Sistema web que converte comandos de voz ou texto em ações automatizadas de navegador.
 
-First, run the development server:
+## Arquitetura
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+Frontend (Next.js) → API Backend → Automação Browser
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Funcionalidades
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Entrada de Comandos**
+- 🎤 **Modo Áudio**: Upload de arquivo de áudio (MP3, WAV, M4A)
+- ⌨️ **Modo Texto**: Digite comandos em linguagem natural
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Processamento**
+1. Transcrição de áudio em texto (quando aplicável)
+2. Interpretação de comandos em linguagem natural
+3. Execução automatizada no navegador
 
-## Learn More
+**Comandos Suportados**
+- `navigate` - Navegar para sites
+- `click` - Clicar em elementos
+- `type` - Digitar texto
+- `search` - Fazer buscas
+- `screenshot` - Capturar tela
+- `scroll` - Rolar página
+- `wait` - Aguardar tempo
+- `extract` - Extrair dados
 
-To learn more about Next.js, take a look at the following resources:
+## Exemplo de Uso
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+"Abrir o Google e buscar por inteligência artificial"
+↓
+1. navigate → google.com
+2. type → "inteligência artificial"
+3. click → botão buscar
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Stack
 
-## Deploy on Vercel
+- **Frontend**: Next.js 15, React 19, TypeScript, Tailwind CSS
+- **Comunicação**: Axios
+- **UI**: React Icons, React Hot Toast
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

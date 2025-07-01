@@ -1,8 +1,7 @@
-// src/components/CommandList.tsx
 'use client';
 
 import { useState } from 'react';
-import { FiPlay, FiTrash2, FiCode, FiEye, FiEyeOff } from 'react-icons/fi';
+import { FiPlay, FiCode, FiEye, FiEyeOff } from 'react-icons/fi';
 import api from '@/services/api';
 import toast from 'react-hot-toast';
 
@@ -116,8 +115,6 @@ export default function CommandList({ commands, onExecute }: CommandListProps) {
           {showJson ? 'Ocultar' : 'Ver'} JSON
         </button>
       </div>
-
-      {/* Commands List */}
       <div className="space-y-3 mb-6">
         {commands.map((command, index) => (
           <div
@@ -155,8 +152,6 @@ export default function CommandList({ commands, onExecute }: CommandListProps) {
           </div>
         ))}
       </div>
-
-      {/* JSON View */}
       {showJson && (
         <div className="mb-6 p-4 bg-gray-900 rounded-lg overflow-x-auto">
           <pre className="text-xs text-gray-300">
@@ -164,8 +159,6 @@ export default function CommandList({ commands, onExecute }: CommandListProps) {
           </pre>
         </div>
       )}
-
-      {/* Execution Results */}
       {executionResults && executionResults.data?.summary && (
         <div className={`mb-6 p-4 rounded-lg ${getExecutionStatusColor()}`}>
           <p className="text-sm mb-2 font-semibold">{executionResults.message}</p>
@@ -199,8 +192,6 @@ export default function CommandList({ commands, onExecute }: CommandListProps) {
           </div>
         </div>
       )}
-
-      {/* Execute Button */}
       <button
         onClick={handleExecute}
         disabled={isExecuting || commands.length === 0}

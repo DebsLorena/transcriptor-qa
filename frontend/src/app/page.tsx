@@ -42,7 +42,6 @@ export default function Home() {
       />
 
       <div className="max-w-6xl mx-auto px-6 py-16">
-        {/* Cabeçalho */}
         <header className="text-center mb-16 animate-fadeIn">
           <h1 className="text-4xl font-light tracking-tight mb-2">
             Sistema de Reconhecimento de Voz
@@ -51,8 +50,6 @@ export default function Home() {
             Converta comandos de voz em ações automatizadas
           </p>
         </header>
-
-        {/* Alternador de modo */}
         <div className="flex justify-center mb-12 animate-fadeIn">
           <div className="bg-neutral-900 border border-neutral-800 rounded-lg p-1 flex gap-1 shadow-sm backdrop-blur-sm">
             <button
@@ -75,8 +72,6 @@ export default function Home() {
             </button>
           </div>
         </div>
-
-        {/* Conteúdo */}
         <div className="max-w-3xl mx-auto space-y-6 animate-fadeIn">
           {modo === 'audio' ? (
             <AudioUploader

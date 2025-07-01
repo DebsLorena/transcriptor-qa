@@ -1,152 +1,187 @@
 # 🎙️ Sistema Inteligente de Reconhecimento de Voz + NLP + Automação
 
-Um sistema completo que transforma áudios em ações automatizadas.  
+Um sistema completo que transforma áudios em ações automatizadas.
 Integra reconhecimento de voz (transcrição), processamento de linguagem natural (NLP) para interpretar comandos, e automação para executar esses comandos, tudo de forma limpa, modular e escalável.
-
----
 
 ## 📌 Funcionalidades
 
-- 🎧 Upload de áudios (.mp3, .wav) via interface web em Next.js  
-- 🧠 Transcrição precisa com OpenAI Whisper API  
-- 🤖 Interpretação do texto transcrito com GPT-4 para extrair comandos em formato estruturado  
-- ⚙️ Automação de ações com base nos comandos extraídos (ex: navegar em URL, clicar, preencher formulários)  
-- 🧪 Testes automatizados de ponta a ponta com Supertest simulando o uso real da API  
-- 🌐 Frontend em Next.js para upload, visualização dos resultados e execução das automações  
-
----
+- 🎧 **Upload de áudios** (.mp3, .wav) via interface web em Next.js
+- 🧠 **Transcrição precisa** com OpenAI Whisper API
+- 🤖 **Interpretação inteligente** do texto transcrito com GPT-4 para extrair comandos em formato estruturado
+- ⚙️ **Automação de ações** com Puppeteer (navegar, clicar, preencher formulários, fazer screenshots)
+- 🌐 **Frontend moderno** em Next.js 15 + TypeScript para upload e visualização dos resultados
 
 ## 📁 Estrutura do Projeto
 
+```
 transcriptor-app/
 ├── backend/
-│ ├── src/
-│ │ ├── routes/transcribe.js # Rota para upload e processamento do áudio
-│ │ ├── services/whisperService.js # Serviço de integração com Whisper
-│ │ ├── services/nlpCommandParser.js # Serviço para interpretar texto em comandos estruturados
-│ │ ├── services/automationRunner.js # Serviço que executa ações automatizadas
-│ │ └── utils/fileHandler.js # Funções auxiliares para manipulação de arquivos
-│ ├── tests/e2eTranscription.test.js # Testes automatizados ponta a ponta
-│ ├── uploads/ # Diretório para armazenar arquivos de áudio temporariamente
-│ └── app.js # Inicialização do servidor Express
-├── frontend/ (Next.js)
-│ ├── pages/
-│ │ └── index.tsx # Página principal com upload e visualização
-│ ├── components/ # Componentes React reutilizáveis
-│ └── styles/ # Arquivos de estilos (TailwindCSS)
-├── .env # Variáveis de ambiente (API Keys, portas, etc)
-├── README.md # Este arquivo
-
-yaml
-Copiar
-Editar
+│   ├── src/
+│   │   ├── controllers/
+│   │   │   ├── transcribeController.js    # Controlador de transcrição
+│   │   │   └── automationController.js    # Controlador de automação
+│   │   ├── routes/
+│   │   │   ├── transcribe.js              # Rotas de transcrição
+│   │   │   └── automation.js              # Rotas de automação
+│   │   ├── services/
+│   │   │   ├── audio/
+│   │   │   │   └── whisperService.js      # Integração com Whisper API
+│   │   │   ├── nlp/
+│   │   │   │   └── nlpCommandParser.js    # Parser de comandos com GPT-4
+│   │   │   ├── automation/
+│   │   │   │   └── automationRunner.js    # Executor de automações com Puppeteer
+│   │   │   └── utils/
+│   │   │       ├── fileHandler.js         # Manipulação de arquivos
+│   │   │       └── logger.js              # Sistema de logs
+│   │   └── config/
+│   │       └── environment.js             # Configurações de ambiente
+│   ├── uploads/                            # Diretório temporário para áudios
+│   ├── server.js                           # Servidor Express principal
+│   └── package.json
+├── frontend/
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── page.tsx                   # Página principal
+│   │   │   └── layout.tsx                 # Layout da aplicação
+│   │   ├── components/
+│   │   │   ├── AudioUploader.tsx          # Componente de upload
+│   │   │   ├── TranscriptionDisplay.tsx   # Display de transcrição
+│   │   │   └── CommandList.tsx            # Lista de comandos gerados
+│   │   └── services/
+│   │       └── api.ts                     # Cliente da API
+│   ├── public/                            # Arquivos públicos
+│   └── package.json
+├── .env.example                           # Exemplo de variáveis de ambiente
+└── README.md                              # Este arquivo
+```
 
 ## 🚀 Como Rodar o Projeto
 
 ### 1. Clone o repositório
-
 ```bash
 git clone https://github.com/seu-usuario/transcriptor-ia.git
-cd transcriptor-ia 
+cd transcriptor-ia
 ```
+
 ### 2. Configure as variáveis de ambiente
-No diretório backend/, crie um arquivo .env com o conteúdo:
+No diretório `backend/`, crie um arquivo `.env`:
 
-```
+```env
+# OpenAI
 OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxx
+
+# Server
 PORT=5000
+NODE_ENV=development
+
+# Upload
+MAX_FILE_SIZE=10485760  # 10MB em bytes
+UPLOAD_DIR=./uploads
 ```
+
 ### 3. Instale as dependências
-```
+
+```bash
 # Backend
 cd backend
 npm install
-
 
 # Frontend
 cd ../frontend
 npm install
 ```
+
 ### 4. Inicie os servidores
-```
-# Backend
+
+```bash
+# Terminal 1 - Backend
 cd backend
 npm run dev
 
-# Frontend
-cd ../frontend
+# Terminal 2 - Frontend
+cd frontend
 npm run dev
 ```
----
+
+- Backend rodará em: http://localhost:5000
+- Frontend rodará em: http://localhost:3000
 
 ## 🔧 Tecnologias Utilizadas
+
 ### Backend
-- Node.js + Express
+- **Node.js** (v18+) + **Express** - Servidor e API REST
+- **Multer** - Upload e gerenciamento de arquivos
+- **OpenAI SDK** - Integração com Whisper API e GPT-4
+- **Puppeteer** - Automação de navegador
+- **Axios** - Requisições HTTP
+- **fs-extra** - Manipulação avançada de arquivos
+- **Dotenv** - Gerenciamento de variáveis de ambiente
 
-- Multer (upload de arquivos)
-
-- OpenAI Whisper API (transcrição de áudio)
-
-- OpenAI GPT-4 (NLP para interpretar comandos e gerar testes)
-
-- Supertest + Jest (testes automatizados ponta a ponta)
-
-- Frontend (Next.js)
-
-### Next.js 14+
-
-- TailwindCSS
-
-- Axios (consumo da API)
+### Frontend
+- **Next.js 15** - Framework React com App Router
+- **React 19** - Biblioteca UI
+- **TypeScript** - Tipagem estática
+- **TailwindCSS** - Estilização
+- **React Icons** - Ícones da interface
 
 ## ✅ Fluxo de Uso
-- O usuário acessa a interface web e faz upload de um áudio contendo comandos em linguagem natural.
 
-- O backend processa o áudio com Whisper e obtém a transcrição textual.
+1. **Upload**: O usuário acessa a interface web e faz upload de um áudio contendo comandos em linguagem natural
+2. **Transcrição**: O backend processa o áudio com Whisper API e obtém a transcrição textual
+3. **Interpretação**: O texto é enviado para o GPT-4, que interpreta e converte em comandos estruturados JSON
+4. **Execução**: O Puppeteer executa as automações solicitadas (navegar, clicar, preencher formulários, etc.)
+5. **Resultados**: Logs detalhados e resultados das ações são exibidos em tempo real na interface
 
-- O texto é enviado para o GPT-4, que interpreta e converte em comandos estruturados.
+## 📊 Exemplos de Comandos Suportados
 
-- O sistema executa as automações solicitadas (ex: navegar para URL, clicar em botões, preencher formulários).
+O sistema interpreta comandos naturais como:
 
--  Resultados e logs das ações são exibidos na interface.
+- "Navegue para o YouTube e pesquise por vídeos de programação"
+- "Clique no primeiro resultado da pesquisa"
+- "Preencha o formulário com meu nome e email"
+- "Tire uma screenshot da página"
+- "Role a página até o final"
 
--  Simultaneamente, testes automatizados validam todo o fluxo para garantir qualidade.
+## 🚀 Deploy
 
-## 🧪 Como Executar os Testes Automatizados
-- No diretório backend/, rode:
+### Frontend (Vercel)
+```bash
+cd frontend
+vercel --prod
 ```
-npm run test
-```
-### Os testes cobrem:
 
-- Upload e processamento do áudio
+### Backend (Railway/Render)
+Configure as variáveis de ambiente na plataforma e faça o deploy direto do GitHub.
 
-- Transcrição correta
+## 💡 Melhorias Futuras
 
-- Interpretação e geração de comandos
+- [ ] Implementar testes automatizados com Jest e Supertest
+- [ ] Suporte a mais formatos de áudio (.ogg, .m4a, .flac)
+- [ ] Gravação de áudio direto no navegador
+- [ ] Fila de processamento com Redis/Bull para escalabilidade
+- [ ] Dashboard com histórico de transcrições e automações
+- [ ] Webhooks para integração com outros serviços
+- [ ] Modo batch para processar múltiplos áudios
+- [ ] Export de automações como scripts reutilizáveis
 
-- Execução das automações
+## 🔒 Segurança
 
-- Tempo de resposta e estabilidade da API
-
-## 💡 Possíveis Melhorias Futuras
-- Implementar fila de processamento para maior escalabilidade (ex: Redis + Bull)
-
-- Criar histórico e dashboard para transcrições e automações
-
-- Permitir gravação de áudio direto no navegador
-
-- Deploy integrado usando Vercel (frontend) e Render/Heroku (backend)
-
-- Integração com outros serviços de automação e controle de dispositivos
+- Validação rigorosa de uploads (tipo, tamanho, conteúdo)
+- Rate limiting nas APIs
+- Sanitização de comandos antes da execução
+- Timeout em automações para prevenir loops infinitos
+- Logs detalhados para auditoria
 
 ## 📬 Contato
-Conecte-se comigo no LinkedIn
+
+Conecte-se comigo no [LinkedIn](https://linkedin.com/in/lorenadebs)
+
 Feedbacks, sugestões e contribuições são muito bem-vindos!
 
 ## 📜 Licença
 
-Este projeto está licenciado sob a Licença MIT — você pode usar, modificar e distribuir o código, desde que dê os devidos créditos ao autor original (Lorena Debs).  
+Este projeto está licenciado sob a **Licença MIT** — você pode usar, modificar e distribuir o código, desde que dê os devidos créditos ao autor original.
 
+---
 
-##* Copyright (c) 2025 Lorena Debs
+**© 2025 Lorena Debs**

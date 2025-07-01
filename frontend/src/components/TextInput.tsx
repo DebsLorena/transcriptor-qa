@@ -41,7 +41,6 @@ export default function TextInput({
     setLogs(['📝 Processando texto...']);
 
     try {
-      // Parse do texto para comandos
       setLogs(prev => [...prev, '🧠 Interpretando comandos...']);
       const response = await api.post('/parse', { text });
 
@@ -71,8 +70,6 @@ export default function TextInput({
         <FiFileText color="#7A0BC0" />
         Entrada de Texto
       </h2>
-
-      {/* Text Area */}
       <div className="relative">
         <textarea
           value={text}
@@ -85,8 +82,6 @@ export default function TextInput({
           {text.length} caracteres
         </div>
       </div>
-
-      {/* Examples */}
       <div className="mt-6">
         <p className="text-sm text-gray-400 mb-3">Exemplos de comandos:</p>
         <div className="flex flex-wrap gap-2">
@@ -102,7 +97,6 @@ export default function TextInput({
         </div>
       </div>
 
-      {/* Parsed Commands Preview */}
       {parsedCommands.length > 0 && (
         <div className="mt-6 p-4 bg-gray-700 rounded-lg">
           <p className="text-sm text-gray-400 mb-2">Comandos interpretados:</p>
@@ -115,8 +109,6 @@ export default function TextInput({
           </div>
         </div>
       )}
-
-      {/* Send Button */}
       <button
         onClick={handleParse}
         disabled={!text.trim() || isProcessing}

@@ -1,4 +1,3 @@
-// src/components/ExecutionLog.tsx
 'use client';
 
 import { useEffect, useRef } from 'react';
@@ -13,7 +12,6 @@ export default function ExecutionLog({ logs, onClear }: ExecutionLogProps) {
   const logsEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Auto-scroll para o final quando novos logs aparecem
     logsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [logs]);
 
@@ -71,7 +69,6 @@ export default function ExecutionLog({ logs, onClear }: ExecutionLogProps) {
         )}
       </div>
 
-      {/* Status Bar */}
       <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
         <span>{logs.length} logs</span>
         <span className="flex items-center gap-2">

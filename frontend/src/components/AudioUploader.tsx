@@ -85,8 +85,6 @@ export default function AudioUploader({
         </span>
         Audio Upload
       </h2>
-
-      {/* Upload Area */}
       <div
         onClick={() => fileInputRef.current?.click()}
         className="border border-dashed border-zinc-600 rounded-lg p-16 text-center cursor-pointer 
@@ -108,8 +106,6 @@ export default function AudioUploader({
         onChange={handleFileChange}
         className="hidden"
       />
-
-      {/* Selected File */}
       {file && (
         <div className="mt-4 p-4 bg-zinc-700/50 rounded-lg flex items-center justify-between">
           <span className="text-sm text-zinc-300">{file.name}</span>
@@ -121,16 +117,12 @@ export default function AudioUploader({
           </button>
         </div>
       )}
-
-      {/* Transcribed Text */}
       {transcribedText && (
         <div className="mt-4 p-4 bg-zinc-700/30 rounded-lg border border-zinc-700">
           <p className="text-xs text-zinc-500 mb-2">Transcription</p>
           <p className="text-sm text-zinc-200">{transcribedText}</p>
         </div>
       )}
-
-      {/* Upload Button */}
       <button
         onClick={handleUpload}
         disabled={!file || isProcessing}
